@@ -6,6 +6,6 @@ RSpec.describe Merchant, type: :model do
   end
 
   describe 'relatioships' do
-
+    it { should have_many(:items) }
   end
 end

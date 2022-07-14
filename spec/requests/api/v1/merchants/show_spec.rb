@@ -23,7 +23,7 @@ RSpec.describe 'The Merchant Index endpoint' do
     expect(full_response[:data][:attributes][:name]).to eq ("Jim")
   end
 
-  xit 'returns 404 if no merchant found' do
+  it 'returns 404 if no merchant found' do
     merchant1 = Merchant.create(name: "Jim")
     id = merchant1.id + 1
 

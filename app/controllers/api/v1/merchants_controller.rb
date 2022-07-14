@@ -5,9 +5,10 @@ class Api::V1::MerchantsController < ApplicationController
   end
 
   def show
-    if @merchant = MerchantFacade.find_by_id(params[:id])
-      render json: MerchantSerializer.merchant_show(@merchant)
-    else
+    begin
+      merchant = Merchant.find(params[:id])
+      render json: MerchantSerializer.merchant_show(merchant)
+    rescue ActiveRecord::RecordNotFound
       render status: 404
     end
   end

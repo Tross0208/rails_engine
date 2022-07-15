@@ -41,6 +41,19 @@ class Api::V1::ItemsController < ApplicationController
     end
   end
 
+  def update
+    begin
+      if params[:merchant_id]
+        merchant = Merchant.find(params[:merchant_id])
+      end 
+      item = Item.find(params[:id])
+      item.update(item_params)
+      render json: ItemSerializer.item_show(item), status: 201
+    rescue ActiveRecord::RecordNotFound
+      render status: 404
+    end
+  end
+
   private
 
   def item_params

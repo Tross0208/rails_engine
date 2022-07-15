@@ -29,7 +29,23 @@ class Api::V1::ItemsController::ItemSerializer
             merchant_id: item.merchant_id
           }
         }
-    }
+      }
+  end
+
+  def self.item_search(item)
+    {
+      data:
+        {
+          id: item.id.to_s,
+          type: "item",
+          attributes: {
+            name: item.name,
+            description: item.description,
+            unit_price: item.unit_price,
+            merchant_id: item.merchant_id            
+          }
+        }
+      }
   end
 
   def self.blank

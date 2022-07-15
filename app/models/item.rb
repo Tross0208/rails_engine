@@ -5,8 +5,18 @@ class Item < ApplicationRecord
 
   belongs_to :merchant
 
-  def self.item_search(name)
+  def self.item_search_by_name(name)
     item = Item.where("name ILIKE '%#{name}%'")
+    return item.first
+  end
+
+  def self.item_search_by_min_price(price)
+    item = Item.where("unit_price >='#{price.to_f}'")
+    return item.first
+  end
+
+  def self.item_search_by_max_price(price)
+    item = Item.where("unit_price <='#{price.to_f}'")
     return item.first
   end
 end

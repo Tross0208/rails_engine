@@ -55,11 +55,35 @@ class Api::V1::ItemsController < ApplicationController
   end
 
   def find
-    item = Item.item_search(params[:name])
-    if item
-      render json: ItemSerializer.item_show(item)
+    if ((params[:name] && params[:min_price]) || (params[:name] && params[:max_price]))
+      render status: 400
     else
-      render json: ItemSerializer.blank
+      if params[:name]
+        item = Item.item_search_by_name(params[:name])
+        if item
+          render json: ItemSerializer.item_show(item)
+        else
+          render json: ItemSerializer.blank
+        end
+      end
+      if params[:min_price] #&& params[:min_price].to_i > 0
+        item = Item.item_search_by_min_price(params[:min_price])
+        if item
+          render json: ItemSerializer.item_search(item)
+        else
+          render json: ItemSerializer.blank
+        end
+      #else
+      # render json: ItemSerializer.blank, status: 400
+      end
+      if params[:max_price]
+        item = Item.item_search_by_max_price(params[:max_price])
+        if item
+          render json: ItemSerializer.item_search(item)
+        else
+          render json: ItemSerializer.blank
+        end
+      end
     end
   end
 

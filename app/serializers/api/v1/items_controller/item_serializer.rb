@@ -31,4 +31,11 @@ class Api::V1::ItemsController::ItemSerializer
         }
     }
   end
+
+  def self.blank
+    {
+      data: {
+        }
+    }
+  end
 end

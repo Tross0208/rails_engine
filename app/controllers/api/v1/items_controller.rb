@@ -45,12 +45,21 @@ class Api::V1::ItemsController < ApplicationController
     begin
       if params[:merchant_id]
         merchant = Merchant.find(params[:merchant_id])
-      end 
+      end
       item = Item.find(params[:id])
       item.update(item_params)
       render json: ItemSerializer.item_show(item), status: 201
     rescue ActiveRecord::RecordNotFound
       render status: 404
+    end
+  end
+
+  def find
+    item = Item.item_search(params[:name])
+    if item
+      render json: ItemSerializer.item_show(item)
+    else
+      render json: ItemSerializer.blank
     end
   end
 

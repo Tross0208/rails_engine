@@ -25,6 +25,17 @@ RSpec.describe 'The Item Show endpoint' do
     expect(full_response[:data][:attributes]).to have_key :name
     expect(full_response[:data][:attributes][:name]).to eq (item1.name)
     expect(full_response[:data][:attributes][:name]).to_not eq (item4.name)
+  end
 
+  it 'returns 404 when given bad id' do
+    merchant1 = Merchant.create(name: "Jim")
+    merchant2 = Merchant.create(name: "Tim")
+
+    item1 = create :item, {merchant_id: merchant1.id}
+    item4 = create :item, {merchant_id: merchant2.id}
+
+    get "/api/v1/items/34567"
+
+    expect(response.status).to be 404
   end
 end

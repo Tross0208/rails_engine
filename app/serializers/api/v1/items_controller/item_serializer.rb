@@ -15,4 +15,20 @@ class Api::V1::ItemsController::ItemSerializer
       end
     }
   end
+
+  def self.item_show(item)
+    {
+      data:
+        {
+          type: "item",
+          id: item.id.to_s,
+          attributes: {
+            name: item.name,
+            description: item.description,
+            unit_price: item.unit_price,
+            merchant_id: item.merchant_id
+          }
+        }
+    }
+  end
 end

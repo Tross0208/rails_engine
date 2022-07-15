@@ -13,4 +13,13 @@ class Api::V1::ItemsController < ApplicationController
       render json: ItemSerializer.item_index(items)
     end
   end
+
+  def show
+    begin
+      item = Item.find(params[:id])
+      render json: ItemSerializer.item_show(item)
+    rescue ActiveRecord::RecordNotFound
+      render status: 404
+    end
+  end
 end

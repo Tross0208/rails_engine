@@ -1,5 +1,5 @@
 class Api::V1::ItemsController::ItemSerializer
-  def self.item_index(items, merchant)
+  def self.item_index(items)
     {
       data: items.map do |item|
         {
@@ -9,7 +9,7 @@ class Api::V1::ItemsController::ItemSerializer
             name: item.name,
             description: item.description,
             unit_price: item.unit_price,
-            merchant_id: merchant.id
+            merchant_id: item.merchant_id
           }
         }
       end
